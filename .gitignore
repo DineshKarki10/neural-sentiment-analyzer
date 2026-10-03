@@ -216,3 +216,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Python / Environment
+__pycache__/
+*.py[cod]
+venv/
+env/
+.venv/
+
+# Data and Logs
+data/raw/
+data/processed/
+*.csv
+*.pkl
+
+# Streamlit
+.streamlit/
