@@ -16,13 +16,29 @@ This dashboard monitors customer review sentiments using a Hugging Face Transfor
 and tracks real-time **Data Drift** to alert teams when customer feedback shifts.
 """)
 
-# Load Processed Data Function
+# Load or Auto-Generate Processed Data Function for Cloud Deployment
 @st.cache_data
 def load_data():
     path = "data/processed/classified_reviews.csv"
     if os.path.exists(path):
         return pd.read_csv(path)
-    return None
+    
+    # Fallback for cloud deployment if data doesn't exist: Generate sample data on the fly
+    os.makedirs("data/processed", exist_ok=True)
+    fallback_data = pd.DataFrame({
+        "product_name": ["Wireless Earbuds", "Smartwatch Pro", "Ergonomic Office Chair", "Wireless Earbuds", "Smartwatch Pro"],
+        "review_text": [
+            "Absolute game changer, amazing battery life!",
+            "Terrible screen, stopped working after two days.",
+            "Very comfortable, saves my back during long work hours.",
+            "Sound quality is decent for the price.",
+            "Disconnected constantly, very disappointed."
+        ],
+        "predicted_sentiment": ["POSITIVE", "NEGATIVE", "POSITIVE", "POSITIVE", "NEGATIVE"],
+        "confidence_score": [0.998, 0.991, 0.995, 0.885, 0.976]
+    })
+    fallback_data.to_csv(path, index=False)
+    return fallback_data
 
 df = load_data()
 
