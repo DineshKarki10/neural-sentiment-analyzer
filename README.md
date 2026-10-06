@@ -21,7 +21,7 @@ A  machine learning application that classifies customer product reviews using a
 ---
 
 ##  Project Structure
-
+```text
 neural-sentiment-analyzer/
 │
 ├── app/
